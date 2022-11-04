@@ -1,0 +1,3 @@
+# Ignore files
+build_Client_Debug/
+build_Server_Debug/
