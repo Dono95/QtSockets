@@ -1,5 +1,4 @@
 #include "ClientUI.h"
-#include "Message.h"
 
 #include <QDebug>
 
@@ -21,12 +20,16 @@ quint64 ClientUI::GetCount() const
     return mMessages.count();
 }
 
-void ClientUI::addMessage(int typ, const QString& message)
+void ClientUI::sendMessage(int typ, const QString& message)
 {
-    mMessages.insert(0,
-        new Message(static_cast<Message::MessageTyp>(typ), message));
+    emit messageSend(typ, message);
+}
 
-    emit messagesChanged(typ, message);
+void ClientUI::StoreMessage(Message::MessageTyp typ, const QString& message)
+{
+    mMessages.insert(0, new Message(typ, message));
+
+    emit messagesChanged();
 }
 
 void ClientUI::SetQmlContextPropertiex(QQmlContext* context)

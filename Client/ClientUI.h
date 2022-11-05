@@ -6,6 +6,9 @@
 #include <QQmlContext>
 #include <QVector>
 
+/* Project specific includes */
+#include "Message.h"
+
 class ClientUI : public QObject
 {
     Q_OBJECT
@@ -18,11 +21,14 @@ public:
     QList<QObject*> GetMessages() const;
     quint64 GetCount() const;
 
-    Q_INVOKABLE void addMessage(int typ, const QString& message);
+    Q_INVOKABLE void sendMessage(int typ, const QString& message);
+
+    void StoreMessage(Message::MessageTyp typ, const QString& message);
 
     void SetQmlContextPropertiex(QQmlContext* context);
 signals:
-    void messagesChanged(int typ, const QString& message);
+    void messageSend(int typ, const QString& message);
+    void messagesChanged();
 
 private:
     QList<QObject*> mMessages;

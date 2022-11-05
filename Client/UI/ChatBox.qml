@@ -22,7 +22,7 @@ Rectangle {
         buttonRadius: 40
 
         onClicked: {
-            ClientUI.addMessage(2, iTextField.text);
+            ClientUI.sendMessage(2, iTextField.text);
             iTextField.clear();
         }
     }

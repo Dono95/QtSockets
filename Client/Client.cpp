@@ -14,13 +14,14 @@ Client::Client(QObject* parent) : QObject(parent), mSocket(new QTcpSocket())
     if(mClientUI)
         mClientUI->SetQmlContextPropertiex(mRootContext);
 
-    connect(mClientUI, &ClientUI::messagesChanged, this,
+    connect(mClientUI, &ClientUI::messageSend, this,
         [&](const int typ, const QString& message)
         {
-            if(static_cast<Message::MessageTyp>(typ) !=
-                Message::MessageTyp::CLIENT_MESSAGE)
+            auto messageTyp = static_cast<Message::MessageTyp>(typ);
+            if(messageTyp == Message::MessageTyp::UNDEFINED)
                 return;
 
+            mClientUI->StoreMessage(messageTyp, message);
             mSocket->write(message.toStdString().c_str());
         });
 
@@ -43,8 +44,7 @@ void Client::readyRead()
 {
     QString data = mSocket->readAll();
 
-    mClientUI->addMessage(static_cast<int>(Message::MessageTyp::SERVER_MESSAGE),
-        data);
+    mClientUI->StoreMessage(Message::MessageTyp::SERVER_MESSAGE, data);
 }
 
 void Client::connected()

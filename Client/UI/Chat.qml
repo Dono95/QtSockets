@@ -17,16 +17,21 @@ Rectangle {
                 Rectangle {
                         width: parent.width * 4/5
                         color: "#1548FF"
-                        height: 50
+                        height: modelData.length > 40 ? 80 : 50
                         radius: 50
                         anchors.right: (modelData.typ === 2) ? parent.right : undefined
                         anchors.left: (modelData.typ === 1) ? parent.left : undefined
+
+                        Component.onCompleted: console.log(modelData.length);
                         Text {
                             id: name
-                            text: modelData.message
                             anchors.fill: parent
                             verticalAlignment: Text.AlignVCenter
                             horizontalAlignment: Text.AlignHCenter
+                            text: modelData.message
+                            color: "#ffffff"
+                            font.pixelSize: 20
+                            wrapMode: Text.WordWrap
                         }
                      }
 
