@@ -1,7 +1,7 @@
 #include "Message.h"
 
 Message::Message(MessageTyp typ, const QString& message) :
-    mTyp(typ), mMessage(message)
+    mTyp(typ), mMessage(message), mLength(message.count())
 {
 }
 
@@ -17,4 +17,9 @@ int64_t Message::GetTyp() const
 QString Message::GetMessage() const
 {
     return mMessage;
+}
+
+int64_t Message::GetLength() const
+{
+    return mLength;
 }
