@@ -14,9 +14,12 @@ signals:
 
 public slots:
     void readyRead();
+    void disconnect();
 
 private:
     void ModifeIncomingData(QString& data) const;
+
+    const int mSocketDescriptor;
 };
 
 #endif// CLIENTSOCKET_H
