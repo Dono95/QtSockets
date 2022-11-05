@@ -23,6 +23,14 @@ quint64 ClientUI::GetCount() const
     return mMessages.count();
 }
 
+void ClientUI::addMessage(int typ, const QString& message)
+{
+    mMessages.insert(0,
+        new Message(static_cast<Message::MessageTyp>(typ), message));
+
+    emit messagesChanged();
+}
+
 void ClientUI::SetQmlContextPropertiex(QQmlContext* context)
 {
     if(!context)

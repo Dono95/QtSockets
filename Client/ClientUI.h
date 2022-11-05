@@ -18,6 +18,8 @@ public:
     QList<QObject*> GetMessages() const;
     quint64 GetCount() const;
 
+    Q_INVOKABLE void addMessage(int typ, const QString& message);
+
     void SetQmlContextPropertiex(QQmlContext* context);
 signals:
     void messagesChanged();
