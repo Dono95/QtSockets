@@ -38,5 +38,6 @@ void ClientSocket::disconnect()
 void ClientSocket::ModifeIncomingData(QString& data) const
 {
     data += "_" + QDateTime::currentDateTime().time().toString();
-    data += "_RegecDomink";
+    data += "_" + QDateTime::currentDateTime().date().toString();
+    data += "_RegecDominik";
 }
