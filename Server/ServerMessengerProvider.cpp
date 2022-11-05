@@ -1,4 +1,5 @@
 #include "ServerMessengerProvider.h"
+#include <QTcpSocket>
 
 using namespace Server;
 
@@ -22,9 +23,12 @@ bool ServerMessengerProvider::StartListening()
     return listen(QHostAddress::LocalHost, 20201);
 }
 
-void ServerMessengerProvider::incomingConnection(qintptr handle)
+void ServerMessengerProvider::incomingConnection(qintptr socketDescriptor)
 {
-    qDebug() << "__func__";
+    qDebug() << "Incomming connection with descriptor [" << socketDescriptor
+             << "] ... ";
+
+    mClientsSockets.append(new ClientSocket(socketDescriptor));
 }
 
 /******************************************************************/
@@ -34,7 +38,6 @@ void ServerMessengerProvider::incomingConnection(qintptr handle)
 ServerMessengerProvider::ServerMessengerProvider(QObject* parent) :
     QTcpServer{parent}
 {
-    // mServer = new QTcpServer(this);
 }
 
 ServerMessengerProvider::~ServerMessengerProvider()

@@ -17,6 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Network)
 add_executable(Server
   main.cpp
   ServerMessengerProvider.h ServerMessengerProvider.cpp
+  ClientSocket.h ClientSocket.cpp
 )
 target_link_libraries(Server Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Network)
 
