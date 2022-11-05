@@ -22,7 +22,7 @@ public:
 
     void SetQmlContextPropertiex(QQmlContext* context);
 signals:
-    void messagesChanged();
+    void messagesChanged(int typ, const QString& message);
 
 private:
     QList<QObject*> mMessages;

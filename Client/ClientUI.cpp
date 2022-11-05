@@ -1,12 +1,10 @@
 #include "ClientUI.h"
 #include "Message.h"
 
+#include <QDebug>
+
 ClientUI::ClientUI(QObject* parent) : QObject{parent}
 {
-    mMessages.append(
-        new Message(Message::MessageTyp::CLIENT_MESSAGE, "Client message"));
-    mMessages.insert(0,
-        new Message(Message::MessageTyp::SERVER_MESSAGE, "Server message"));
 }
 
 ClientUI::~ClientUI()
@@ -28,7 +26,7 @@ void ClientUI::addMessage(int typ, const QString& message)
     mMessages.insert(0,
         new Message(static_cast<Message::MessageTyp>(typ), message));
 
-    emit messagesChanged();
+    emit messagesChanged(typ, message);
 }
 
 void ClientUI::SetQmlContextPropertiex(QQmlContext* context)

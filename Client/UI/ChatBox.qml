@@ -23,7 +23,6 @@ Rectangle {
 
         onClicked: {
             ClientUI.addMessage(2, iTextField.text);
-            console.log(iTextField.text);
             iTextField.clear();
         }
     }
