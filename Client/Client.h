@@ -1,14 +1,18 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <QMainWindow>
+/* Qt libraries */
+#include <QObject>
+#include <QQmlApplicationEngine>
 
-class Client : public QMainWindow
+class Client : public QObject
 {
     Q_OBJECT
 
 public:
-    Client(QWidget *parent = nullptr);
+    Client(QObject* parent = nullptr);
     ~Client();
+
+private:
 };
-#endif // CLIENT_H
+#endif// CLIENT_H
