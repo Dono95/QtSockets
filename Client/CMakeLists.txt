@@ -18,34 +18,26 @@ find_package(Qt${QT_VERSION_MAJOR}
     Network
     Qml)
 
-set(PROJECT_SOURCES
-        main.cpp
-        Client.h Client.cpp
-        ClientUI.h ClientUI.cpp
+set(PROJECT_HEADERS
+    Client.h
+    ClientUI.h
+    Message.h
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Client
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Client APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(Client SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(Client
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+set(PROJECT_SOURCES
+         main.cpp
+         Client.cpp
+         ClientUI.cpp
+         Message.cpp
+)
+
+add_executable(Client
+    ${PROJECT_SOURCES}
+    ${PROJECT_HEADERS}
+)
+
+file(GLOB_RECURSE QML_SRC "*.qml")
+add_custom_target(UI SOURCES ${QML_SRC})
 
 target_link_libraries(Client
     PRIVATE
