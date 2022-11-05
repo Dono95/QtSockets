@@ -19,9 +19,10 @@ public:
     ~Client();
 public slots:
     void readyRead();
+    void connected();
 
 private:
-    void ConnectToServer(const QHostAddress& address, const quint16 port);
+    bool ConnectToServer(const QHostAddress& address, const quint16 port);
 
     /* Pointer to TCP socket*/
     QTcpSocket* mSocket;
