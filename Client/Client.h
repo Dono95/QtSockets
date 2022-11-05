@@ -4,6 +4,8 @@
 /* Qt libraries */
 #include <QObject>
 #include <QQmlApplicationEngine>
+#include <QTcpSocket>
+#include <QHostAddress>
 
 /* Project specific includes */
 #include "ClientUI.h"
@@ -15,8 +17,15 @@ class Client : public QObject
 public:
     Client(QObject* parent = nullptr);
     ~Client();
+public slots:
+    void readyRead();
 
 private:
+    void ConnectToServer(const QHostAddress& address, const quint16 port);
+
+    /* Pointer to TCP socket*/
+    QTcpSocket* mSocket;
+
     /* Client UI class */
     ClientUI* mClientUI;
 

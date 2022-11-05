@@ -3,11 +3,15 @@
 
 /* QT library */
 #include <QObject>
+#include <QVector>
 /* QT Network library */
 #include <QTcpServer>
 
 /* STD library*/
 #include <mutex>
+
+/* Project specific includes */
+#include "ClientSocket.h"
 
 namespace Server
 {
@@ -41,7 +45,7 @@ namespace Server
         bool StartListening();
 
     protected:
-        virtual void incomingConnection(qintptr handle) override;
+        virtual void incomingConnection(qintptr socketDescriptor) override;
 
     private:
         /**
@@ -60,6 +64,9 @@ namespace Server
 
         /* Mutex to protect multi-thread access to ServerMessengerProvider*/
         static std::mutex mMutex;
+
+        /* Vector of client's sockets*/
+        QVector<ClientSocket*> mClientsSockets;
     };
 }// namespace Server
 
