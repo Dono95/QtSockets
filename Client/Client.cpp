@@ -42,15 +42,42 @@ Client::~Client()
 
 void Client::readyRead()
 {
-    QString data = mSocket->readAll();
+    QVector<std::pair<Message::MessageTyp, QString>> messagesList;
 
-    mClientUI->StoreMessage(Message::MessageTyp::SERVER_MESSAGE, data);
+    while(!mSocket->atEnd())
+    {
+        QString rawMessage = mSocket->readLine();
+
+        Message::MessageTyp typ;
+        if(rawMessage.at(1) == 'S')
+        {
+            typ = Message::MessageTyp::SERVER_MESSAGE;
+            rawMessage.chop(2);
+            rawMessage = rawMessage.remove(0, 3);
+        }
+        else if(rawMessage.at(1) == 'C')
+        {
+            typ = Message::MessageTyp::CLIENT_MESSAGE;
+            rawMessage.chop(2);
+            rawMessage = rawMessage.remove(0, 3);
+        }
+        else
+            typ = Message::MessageTyp::SERVER_MESSAGE;
+
+        messagesList.append({typ, rawMessage});
+    }
+    for(const auto& message_pair : qAsConst(messagesList))
+    {
+        mClientUI->StoreMessage(message_pair.first, message_pair.second);
+    }
 }
 
 void Client::connected()
 {
     qDebug() << "Client is connected to server.";
     mEngine->load(QUrl(QStringLiteral("../UI/main.qml")));
+
+    mSocket->write("init_0_Dominik");
 }
 
 bool Client::ConnectToServer(const QHostAddress& address, const quint16 port)
